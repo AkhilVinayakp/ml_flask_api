@@ -43,7 +43,7 @@ class Ml:
     #fn run will bw called from outside
     def run(self,k):
         self.k = k # amount of neightbour selection
-        self.data = pd.DataFrame(pd.read_csv("data.csv"))
+        self.data = pd.DataFrame(pd.read_csv("../data.csv"))
         print(self.data)
         self.__eucli()
         pr_class = self.__select_k()
