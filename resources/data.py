@@ -2,12 +2,13 @@ from flask_restful import Resource, reqparse
 from flask import jsonify
 import sqlite3
 import pandas as pd
-
+from src.KNN import Ml
 class Data(Resource):
     # Data resource  get method print out all the data that are available
     def __init__(self):
         self.connection = sqlite3.connect('data.db')
         self.cursor = self.connection.cursor()
+        self.k = 3
 
     def get(self):
         query = 'select * from data'
@@ -20,8 +21,8 @@ class Data(Resource):
 
     def post(self):
         args = reqparse.RequestParser()
-        args.add_argument('height', type=float,help='required', required=True)
-        args.add_argument('weight', type=float,help='required', required=True)
+        args.add_argument('height', type=float, help='required', required=True)
+        args.add_argument('weight', type=float, help='required', required=True)
         args.add_argument('size', help='required', required=True)
         data = args.parse_args()
         try:
@@ -33,6 +34,13 @@ class Data(Resource):
 
     def __del__(self):
         self.connection.close()
+
+
+class Classify(Resource):
+    args = reqparse.RequestParser()
+    args.add_argument('height', type=float, required=True, help="this field is required")
+    args.add_argument('weight', type=float, required=True, help="this field is required")
+    arg = args.parse_args()
 
 
 class DataEntry(Resource):
