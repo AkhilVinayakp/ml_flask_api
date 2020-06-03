@@ -3,6 +3,8 @@ from flask import jsonify
 import sqlite3
 import pandas as pd
 from src.KNN import Ml
+
+
 class Data(Resource):
     # Data resource  get method print out all the data that are available
     def __init__(self):
@@ -11,7 +13,7 @@ class Data(Resource):
         self.k = 3
 
     def get(self):
-        query = 'select * from data'
+        query = 'select * from shirt'
         result = self.cursor.execute(query)
         li = []
         for row in result:
